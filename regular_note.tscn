@@ -38,17 +38,17 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t01qx"]
 size = Vector2(32, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8g81"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr4js"]
 size = Vector2(32, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_thtre"]
-size = Vector2(32, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbma"]
+size = Vector2(32, 2)
 
-[node name="RegularNoteBlock" type="StaticBody2D" node_paths=PackedStringArray("area_below", "area_above")]
+[node name="RegularNoteBlock" type="StaticBody2D" node_paths=PackedStringArray("cast_below", "cast_above")]
 collision_layer = 112
 script = ExtResource("1_sfs1v")
-area_below = NodePath("Area2DBelow")
-area_above = NodePath("Area2DAbove")
+cast_below = NodePath("ShapeCast2D")
+cast_above = NodePath("ShapeCast2D2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xkqly")
@@ -58,14 +58,14 @@ autoplay = "default"
 visible = false
 shape = SubResource("RectangleShape2D_t01qx")
 
-[node name="Area2DBelow" type="Area2D" parent="."]
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_nr4js")
+target_position = Vector2(0, 2)
+max_results = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DBelow"]
-position = Vector2(0, 16.5)
-shape = SubResource("RectangleShape2D_c8g81")
-
-[node name="Area2DAbove" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DAbove"]
-position = Vector2(0, -18)
-shape = SubResource("RectangleShape2D_thtre")
+[node name="ShapeCast2D2" type="ShapeCast2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_7vbma")
+target_position = Vector2(0, -4)
+max_results = 8

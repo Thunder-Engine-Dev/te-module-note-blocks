@@ -6,9 +6,11 @@ var jump_timer: float
 
 var hit_from_above = false
 
-func _ready() -> void:
-	area_below.body_entered.connect(_detect_below)
-	area_above.body_entered.connect(_detect_above)
+@onready var player = Thunder._current_player
+
+#func _ready() -> void:
+#	cast_below.body_entered.connect(_detect_below)
+#	cast_above.body_entered.connect(_detect_above)
 
 func _physics_process(delta: float) -> void:
 	delta = Thunder.get_delta(delta)
@@ -18,28 +20,22 @@ func _physics_process(delta: float) -> void:
 		jump_timer = 0
 	
 	if jump_timer > 0: jump_timer -= delta
-
-
-func _detect_below(body) -> void:
-	if triggered: return
 	
-	if body is Player:
-		if body.velocity_local.y < body.config.max_fall_speed:
-			bump(false)
-			return
-
-func _detect_above(body) -> void:
-	if body is Player:
-		body.states.set_state("jump")
+	if is_player_colliding(cast_above):
+		player.states.set_state("jump")
 		if jump_timer > 0:
-			body.velocity_local.y = strong_jump_velocity * body.config.stomp_multiplicator
+			player.velocity_local.y = strong_jump_velocity * player.config.stomp_multiplicator
 		else:
-			body.velocity_local.y = weak_jump_velocity * body.config.stomp_multiplicator
+			player.velocity_local.y = weak_jump_velocity * player.config.stomp_multiplicator
 		
 		hit_from_above = true
 		bump(false, 180, true)
-		
 		return
+	
+	if is_player_colliding(cast_below) && player.velocity_local.y <= 0 && !player.is_on_floor():
+		bump(false)
+		return
+
 
 func call_bump() -> void:
 	bump(true)
