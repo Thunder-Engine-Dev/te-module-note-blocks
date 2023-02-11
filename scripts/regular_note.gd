@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		bump(false, 180, true)
 		return
 	
-	if is_player_colliding(cast_below) && player.velocity_local.y <= 0 && !player.is_on_floor():
+	if is_player_colliding(cast_below) && player.velocity_local.y <= 50 && !player.is_on_floor():
 		bump(false)
 		return
 
