@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://c2kp0x3i7k5l1"]
+
+[ext_resource type="PackedScene" uid="uid://bygmyksq2iwxc" path="res://modules/note-blocks/regular_note.tscn" id="1_07rbt"]
+[ext_resource type="Texture2D" uid="uid://un8iogs0gydf" path="res://modules/note-blocks/textures/white_all_sides_note.png" id="2_52gud"]
+[ext_resource type="Script" path="res://modules/note-blocks/scripts/all_sides_note_regular.gd" id="2_b0325"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rrar"]
+atlas = ExtResource("2_52gud")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8e5vf"]
+atlas = ExtResource("2_52gud")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhlpr"]
+atlas = ExtResource("2_52gud")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_spjb5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rrar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8e5vf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhlpr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8e5vf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v05hd"]
+size = Vector2(2, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vdsjp"]
+size = Vector2(2, 24)
+
+[node name="AllSidesNoteBlock" node_paths=PackedStringArray("cast_left", "cast_right") instance=ExtResource("1_07rbt")]
+script = ExtResource("2_b0325")
+left_push_velocity = -350.0
+right_push_velocity = 350.0
+cast_left = NodePath("ShapeCast2D3")
+cast_right = NodePath("ShapeCast2D4")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_spjb5")
+
+[node name="CollisionShape2D2" parent="StaticBody2D" index="0"]
+disabled = true
+
+[node name="CollisionShape2D3" parent="StaticBody2D" index="1"]
+disabled = true
+
+[node name="ShapeCast2D3" type="ShapeCast2D" parent="." index="5"]
+position = Vector2(-15, 0)
+shape = SubResource("RectangleShape2D_v05hd")
+target_position = Vector2(-2, 0)
+
+[node name="ShapeCast2D4" type="ShapeCast2D" parent="." index="6"]
+position = Vector2(15, 0)
+shape = SubResource("RectangleShape2D_vdsjp")
+target_position = Vector2(2, 0)
