@@ -46,9 +46,9 @@ func call_bump() -> void:
 	bump(true)
 
 
-func _creation(creation: Node2DCreation) -> void:
+func _creation(creation: InstanceNode2D) -> void:
 	if hit_from_above:
-		creation.creation_offset += Vector2(0, 32).rotated(global_rotation)
+		creation.tans_offset += Vector2(0, 32).rotated(global_rotation)
 		#if creation.node.appear_distance:
 	#		creation.node.appear_distance = 0
 #			creation.node.appear_speed = -32

@@ -54,7 +54,7 @@ size = Vector2(32, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pnoak"]
 size = Vector2(32, 4)
 
-[node name="RegularNoteBlock" type="StaticBody2D" node_paths=PackedStringArray("cast_below", "cast_above", "cast_left", "cast_right")]
+[node name="RegularNoteBlock" type="AnimatableBody2D" node_paths=PackedStringArray("cast_below", "cast_above", "cast_left", "cast_right")]
 collision_layer = 96
 script = ExtResource("1_sfs1v")
 strong_jump_velocity = -800.0
@@ -73,12 +73,14 @@ visible = false
 shape = SubResource("RectangleShape2D_t01qx")
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_nr4js")
 target_position = Vector2(0, 2)
 max_results = 8
 
 [node name="ShapeCast2D2" type="ShapeCast2D" parent="."]
+visible = false
 position = Vector2(0, -15)
 shape = SubResource("RectangleShape2D_7vbma")
 target_position = Vector2(0, -4)

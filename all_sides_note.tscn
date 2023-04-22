@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2kp0x3i7k5l1"]
+[gd_scene load_steps=16 format=3 uid="uid://c2kp0x3i7k5l1"]
 
-[ext_resource type="PackedScene" uid="uid://bygmyksq2iwxc" path="res://modules/note-blocks/regular_note.tscn" id="1_07rbt"]
 [ext_resource type="Texture2D" uid="uid://un8iogs0gydf" path="res://modules/note-blocks/textures/white_all_sides_note.png" id="2_52gud"]
 [ext_resource type="Script" path="res://modules/note-blocks/scripts/all_sides_note_regular.gd" id="2_b0325"]
+[ext_resource type="AudioStream" uid="uid://dccn6fto8p2vx" path="res://modules/note-blocks/sounds/spring.wav" id="2_spgmr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rrar"]
 atlas = ExtResource("2_52gud")
@@ -36,34 +36,93 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t01qx"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr4js"]
+size = Vector2(32, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbma"]
+size = Vector2(32, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dn1h5"]
+size = Vector2(32, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3yyw"]
+size = Vector2(32, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pnoak"]
+size = Vector2(32, 4)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v05hd"]
 size = Vector2(2, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vdsjp"]
 size = Vector2(2, 24)
 
-[node name="AllSidesNoteBlock" node_paths=PackedStringArray("cast_left", "cast_right") instance=ExtResource("1_07rbt")]
+[node name="AllSidesNoteBlock" type="AnimatableBody2D" node_paths=PackedStringArray("cast_below", "cast_above", "cast_left", "cast_right")]
+collision_layer = 96
 script = ExtResource("2_b0325")
-left_push_velocity = -350.0
-right_push_velocity = 350.0
+strong_jump_velocity = -800.0
+bump_sound = ExtResource("2_spgmr")
+cast_below = NodePath("ShapeCast2D")
+cast_above = NodePath("ShapeCast2D2")
 cast_left = NodePath("ShapeCast2D3")
 cast_right = NodePath("ShapeCast2D4")
 
-[node name="AnimatedSprite2D" parent="." index="0"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_spjb5")
+autoplay = "default"
 
-[node name="CollisionShape2D2" parent="StaticBody2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_t01qx")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_nr4js")
+target_position = Vector2(0, 2)
+max_results = 8
+
+[node name="ShapeCast2D2" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_7vbma")
+target_position = Vector2(0, -4)
+max_results = 8
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-14, 0)
+rotation = -1.57079
+shape = SubResource("RectangleShape2D_dn1h5")
 disabled = true
+one_way_collision = true
 
-[node name="CollisionShape2D3" parent="StaticBody2D" index="1"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(14, 0)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_l3yyw")
 disabled = true
+one_way_collision = true
 
-[node name="ShapeCast2D3" type="ShapeCast2D" parent="." index="5"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 14)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_pnoak")
+one_way_collision = true
+
+[node name="ShapeCast2D3" type="ShapeCast2D" parent="."]
 position = Vector2(-15, 0)
 shape = SubResource("RectangleShape2D_v05hd")
 target_position = Vector2(-2, 0)
 
-[node name="ShapeCast2D4" type="ShapeCast2D" parent="." index="6"]
+[node name="ShapeCast2D4" type="ShapeCast2D" parent="."]
 position = Vector2(15, 0)
 shape = SubResource("RectangleShape2D_vdsjp")
 target_position = Vector2(2, 0)
