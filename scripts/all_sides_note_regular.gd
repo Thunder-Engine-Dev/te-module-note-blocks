@@ -1,4 +1,4 @@
-extends "res://modules/note-blocks/scripts/regular_note.gd"
+extends "./regular_note.gd"
 
 @export var left_push_velocity: float = -350
 @export var right_push_velocity: float = 350
