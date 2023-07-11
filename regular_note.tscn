@@ -20,6 +20,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_gb6mx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, 3)]
+}
+
 [sub_resource type="Animation" id="Animation_5ftcv"]
 resource_name = "default"
 length = 0.8
@@ -37,21 +52,6 @@ tracks/0/keys = {
 "values": [Vector2(-3, 3), Vector2(0, 0), Vector2(3, 3), Vector2(0, 0), Vector2(-3, 3)]
 }
 
-[sub_resource type="Animation" id="Animation_gb6mx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-3, 3)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dwlte"]
 _data = {
 "RESET": SubResource("Animation_gb6mx"),
@@ -61,11 +61,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t01qx"]
 size = Vector2(32, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr4js"]
-size = Vector2(32, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vbma"]
 size = Vector2(32, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr4js"]
+size = Vector2(32, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dn1h5"]
 size = Vector2(32, 4)
@@ -76,13 +76,11 @@ size = Vector2(32, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pnoak"]
 size = Vector2(32, 4)
 
-[node name="RegularNoteBlock" type="AnimatableBody2D" node_paths=PackedStringArray("cast_below", "cast_above")]
+[node name="RegularNoteBlock" type="AnimatableBody2D"]
 collision_layer = 96
 script = ExtResource("1_sfs1v")
 strong_jump_velocity = -800.0
 bump_sound = ExtResource("2_vlswn")
-cast_below = NodePath("ShapeCast2D")
-cast_above = NodePath("ShapeCast2D2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xkqly")
@@ -102,18 +100,18 @@ libraries = {
 visible = false
 shape = SubResource("RectangleShape2D_t01qx")
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-visible = false
-position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_nr4js")
-target_position = Vector2(0, 2)
-max_results = 8
-
-[node name="ShapeCast2D2" type="ShapeCast2D" parent="."]
+[node name="Top" type="ShapeCast2D" parent="."]
 visible = false
 position = Vector2(0, -15)
 shape = SubResource("RectangleShape2D_7vbma")
 target_position = Vector2(0, -4)
+max_results = 8
+
+[node name="Bottom" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, 15)
+shape = SubResource("RectangleShape2D_nr4js")
+target_position = Vector2(0, 2)
 max_results = 8
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
